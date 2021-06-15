@@ -38,8 +38,9 @@ openmail은 python과 notion api를 활용해 개발하고 있습니다.
 	2. 기능 개발 (0%)
 		*  notion API 데이터 수집 기능 (50%)
 		*  알림 정보 생산 (0%)
-		*  mail to @everyone
-	3. Class 모듈화 (100%)
+		*  email to @everyone (50%) => SMTP with outlook
+		*  email 화면 (HTML 개발 or Notion 내용 Embed?) (25%)
+	3. Class 모듈화 (0%)
 
 ## Issue
 
