@@ -7,6 +7,9 @@ from shapely import wkt
 import numpy as np
 import os 
 import pickle as pck
+from datetime import timedelta
+from datetime import datetime
+import time
 
 
 def postUrl(url, headers, param = None, retries=10):
@@ -76,9 +79,76 @@ def send_birthday_mail(api_key):
 
 	return sentence ,sentence2
 
+def sentence_weekly_report():
+	
+	# 0: 월 ~ 6: 일
+	# 3: 목요일
+	today = datetime.today()
+	weekday = today.weekday()
+	hour = today.hour
+	minute = today.hour
+
+	############
+	# notion api를 이용한 weekly report page 자동 생성 (09:00에 생성)
+	############
+
+	weekly_report_page = ""
+
+	# 주간보고는 해당 주차 목요일 오전 발송
+	if weekday == 3 and hour == 10 and minute == 0:
+		sentence = '오늘은 목요일! 주간보고를 작성해주세요~ {url}'.format(url = weekly_report_page)
+	else:
+		sentence = ""
+
+	return sentence
+
+def sentence_family_day():
+	
+	today = datetime.today()
+	weekday = today.weekday()
+
+	firstday = today.replace(day=1)
+
+	if firstday.weekday() == 6: # 6: 일 => 3주차 잘 인식함
+		origin = firstday
+		add_value = 0
+	elif firstday.weekday() < 3: # 0 ~ 2: 월~수 => 3주차 잘 인식
+		origin = firstday - timedelta(days=firstday.weekday() + 1)
+		add_value = 0
+	else: # 수,목,금 => 2주차로 인식됨, 1을 더해준다.
+		origin = firstday + timedelta(days=6-firstday.weekday())
+		add_value = 1
+
+	family_weekday = (today - origin).days // 7 + 1 + add_value
+	family_weekday
+
+	# 패밀리데이는 해당 주차 목, 금요일에 발송
+	if family_weekday == 3 and weekday in [3,4]: 
+
+		# make day name
+		if weekday == 3:
+			day_name = "목요일"
+		else:
+			day_name = "금요일"
+
+		# make sentence
+		if day_name == "목요일":
+			sentence = '오늘은 ' + family_weekday + '주차 ' + day_name + '입니다! \n' +  '내일은 패밀리 데이가 있는 날이니, 염두에 두시고 즐거운 하루 보내시길 바랍니다~ 😆😆 \n\n' + '🙌  해당 요일에 외부 프로젝트 및 기타 업무를 하시는 분들께서는 대신 반차로 적립됩니다. '
+		else:
+			sentence = '오늘은 ' + family_weekday + '주차 ' + day_name + '입니다! \n' +  '오늘은 패밀리 데이가 있는 날이니, 오전에 업무 정리 잘 하시고 오후에 퇴근 하세요~ 😆😆 \n\n' + '🙌  해당 요일에 외부 프로젝트 및 기타 업무를 하시는 분들께서는 대신 반차로 적립됩니다. '
+	else:
+		sentence = ""
+		
+	return sentence
 
 if __name__ == "__main__":
-	with open("openmate_key_df.p", 'rb') as f:
-		key_df = pck.load(f)
+	#with open("openmate_key_df.p", 'rb') as f:
+	#	key_df = pck.load(f)
 	
-	send_birthday_mail(key_df.yourmap_notion_api_key[0])
+	#msg_congr, msg_congr_detal = send_birthday_mail(key_df.yourmap_notion_api_key[0])
+	msg_week = sentence_weekly_report()
+	msg_family = sentence_family_day()
+
+	print(msg_week)
+	print(msg_family)
+
