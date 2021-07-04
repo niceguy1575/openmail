@@ -27,7 +27,7 @@ class SendEmail:
         msg = MIMEMultipart('alternative')
         msg['Subject'] = subject
         msg['From'] = senderEmail
-        msg['To'] = targetEmail
+        msg['To'] = ', '.join(targetEmail)
         
         # attach HTML
         msg.attach( MIMEText(message, 'html') )
