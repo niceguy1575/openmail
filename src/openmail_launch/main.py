@@ -79,5 +79,5 @@ if __name__ == '__main__':
     SMail.MailSender(Message, Subject, SenderEmail, TargetEmail)
 
     print("4. dump yesterday data")
-    with open ("/Users/jongwon/git/openmail/data/team_list_yesterday.p", 'wb') as f2:
+    with open ("./data/team_list_yesterday.p", 'wb') as f2:
         pck.dump(meta, f2)
