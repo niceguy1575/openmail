@@ -43,14 +43,18 @@ openmail은 python과 notion api를 활용해 개발하고 있습니다.
 
 	1. 개발 크루 모집 완료(chuck, Wilberforce, niceguy1575)
 
-	2. 기능 개발 (25%)
-		*  notion API 데이터 수집 기능 (75%)
-		*  smtp mail to @everyone (Simple Mail Transform Protocol), python. (50%)
-		*  알림 정보 생산 (0%)
+	2. 기능 개발 (100%)
+		*  notion API 데이터 수집 기능 (100%)
+		*  smtp mail to @everyone (Simple Mail Transform Protocol), python. (100%)
+		*  알림 정보 생산 (100%)
 	
-	3. Class 모듈화 (0%)
+	3. Class 모듈화 (100%)
 	4. 사내 서버 배치화 (0%)
+
+* 향후 teams api를 활용한 메시지 전달 기능 추가 예정 (@Wilberforce)
 
 ## Issue
 
-현재는 없음!
+1. 노션 시스템시간과 korea time간의 차이가 발생하기 때문에 배치는 반드시 오전 9시 이후에 수행할것
+
+👉 반영 완료
