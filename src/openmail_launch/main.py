@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     print("0. load setup data")
     # 1. 암호 data 호출
-    with open("./data/openmate_key_df.p", 'rb') as f:
+    with open("./data/openmate_key_df_rev.p", 'rb') as f:
         key_df = pck.load(f)
 
     print("1. make contents")
@@ -34,12 +34,12 @@ if __name__ == '__main__':
 
     # gmail은 추가 설정해줘야 하기 때문에 구현이 어려울 것으로 판단!
     SenderMailServer = 'smtp.office365.com' 
-    SenderEmail = ''
-    SenderPW = ''
+    SenderEmail = key_df.email_id[0]
+    SenderPW = key_df.email_pw[0]
     SMail = SendEmail(SenderMailServer, SenderEmail, SenderPW) # 수신 메일 설정 
     
     TargetEmail = meta.email.to_list()
-        
+
     # 메일 내용 설정 
     print("2. mail message")
     today = datetime.today()
@@ -73,7 +73,6 @@ if __name__ == '__main__':
             </body>
         </html>
     """
-    print(Message)
 
     print("3. mail send")
     SMail.MailSender(Message, Subject, SenderEmail, TargetEmail)
