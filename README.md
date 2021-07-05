@@ -31,12 +31,10 @@ openmail은 다음과 같은 구조를 가지고 있는 프로그램입니다.
 ## Contents
 openmail은 아래와 같은 콘텐츠를 포함하고 있습니다.
 
-	1. 매주 주간보고 작성 이메일 알림
-	2. 조직원 생일 및 입사 N주년 알림
-	3. Welcome! 👋🏻 입사자 알리미!!
-	4. 입사자 onboarding letter [7일]
-	5. 패밀리데이 알림
-	6. 세미나 참여 링크
+	1. 매주 주간보고 작성 이메일 알림 (@niceguy1575)
+	2. 조직원 생일 및 입사 N주년 알림  (@chuck)
+	3. Welcome! 👋🏻 입사자 알리미!!  (@niceguy1575)
+	4. 패밀리데이 알림 (@niceguy1575)
 
 ## 진행사항
 openmail은 python과 notion api를 활용해 개발하고 있습니다.
