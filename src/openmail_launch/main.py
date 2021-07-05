@@ -39,6 +39,7 @@ if __name__ == '__main__':
     SMail = SendEmail(SenderMailServer, SenderEmail, SenderPW) # 수신 메일 설정 
     
     TargetEmail = meta.email.to_list()
+    TargetEmail = ['niceguy1575@openmate.co.kr', 'planajh@openmate.co.kr', 'suyo1207@openmate.co.kr']
 
     # 메일 내용 설정 
     print("2. mail message")
@@ -74,8 +75,14 @@ if __name__ == '__main__':
         </html>
     """
 
+    msg_len = len(msg_birthday1) + len(msg_anniv1) + len(msg_weekly) + len(msg_family) + len(msg_newbie)
+
     print("3. mail send")
-    SMail.MailSender(Message, Subject, SenderEmail, TargetEmail)
+
+    if msg_len > 0:
+        SMail.MailSender(Message, Subject, SenderEmail, TargetEmail)
+    else:
+        print("no need to send e-mail")
 
     print("4. dump yesterday data")
     with open ("./data/team_list_yesterday.p", 'wb') as f2:
