@@ -52,20 +52,29 @@ class get_api:
         phone = []
         for result in self.data['results']:
             if (result['properties']['block']['select']['name'] != '명예의전당'):
-
-                # 이름 
-                name.append(result['properties']['Name']['title'][0]['text']['content'])
-                # 생일
-                birthday.append(result['properties']['생년월일']['date']['start'])
-                # 직급
-                grade.append(result['properties']['직급']['select']['name'])
-                # 팀 
-                team.append(result['properties']['팀']['select']['name'])	
-                # email
-                email.append(result['properties']['email']['rich_text'][0]['text']['content'])
-                #phone
-                phone.append(result['properties']['Phone']['phone_number'])
-
+                try:
+                    # 미리 변수 할당을 함으로써 오류 있는지를 확인
+                    # 이후 list에 append
+                    name_sample = result['properties']['Name']['title'][0]['text']['content']
+                    birth_sample = result['properties']['생년월일']['date']['start']
+                    grade_sample = result['properties']['직급']['select']['name']
+                    team_sample = result['properties']['팀']['select']['name']
+                    email_sample = result['properties']['email']['rich_text'][0]['text']['content']
+                    phone_sample = result['properties']['Phone']['phone_number']
+                    # 이름 
+                    name.append(name_sample)
+                    # 생일
+                    birthday.append(birth_sample)
+                    # 직급
+                    grade.append(grade_sample)
+                    # 팀 
+                    team.append(team_sample)
+                    # email
+                    email.append(email_sample)
+                    #phone
+                    phone.append(phone_sample)
+                except:
+                    pass
             else :
                 pass
 
@@ -92,17 +101,26 @@ class Sentence(get_api):
         team = []
         notion_url = []
         for result in self.data['results']:
-            if (result['properties']['block']['select']['name'] != '명예의전당') and (result['properties']['생일check']['formula']['boolean'] == True):
-                # 이름 
-                name.append(result['properties']['Name']['title'][0]['text']['content'])
-                # 생일
-                birthday.append(result['properties']['생년월일']['date']['start'])
-                # 직급
-                grade.append(result['properties']['직급']['select']['name'])
-                # 팀 
-                team.append(result['properties']['팀']['select']['name'])	
-                # notion_url
-                notion_url.append("https://notion.so/"+result['id'].replace('-',''))
+            if (result['properties']['block']['select']['name'] != '명예의전당') and (result['properties']['생일check']['formula']['boolean'] == True): # 근무일&생일check는 기본 공란이기 때문에 예외처리할 필요가 없음.
+                try:
+                    name_sample = result['properties']['Name']['title'][0]['text']['content']
+                    birth_sample = result['properties']['Name']['title'][0]['text']['content']
+                    grade_sample = result['properties']['Name']['title'][0]['text']['content']
+                    team_sample = result['properties']['Name']['title'][0]['text']['content']
+                    notion_sample = "https://notion.so/"+result['id'].replace('-','')
+
+                    # 이름 
+                    name.append(name_sample)
+                    # 생일
+                    birthday.append(birth_sample)
+                    # 직급
+                    grade.append(grade_sample)
+                    # 팀 
+                    team.append(team_sample)    
+                    # notion_url
+                    notion_url.append(notion_sample)
+                except:
+                    pass
             else :
                 pass
 
@@ -138,19 +156,29 @@ class Sentence(get_api):
         team = []
         notion_urls = []
         for result in self.data['results']:
-            if (result['properties']['block']['select']['name'] != '명예의전당') and (result['properties']['근무일체크']['formula']['boolean'] == True):
-                # 이름 
-                name.append(result['properties']['Name']['title'][0]['text']['content'])
-                # 입사일 
-                anniversary.append(result['properties']['입사일']['date']['start'])
-                # N
-                n.append(str(int(datetime.now().strftime('%Y')) - int(datetime.strptime(result['properties']['입사일']['date']['start'],'%Y-%m-%d').strftime('%Y'))))
-                # 직급
-                grade.append(result['properties']['직급']['select']['name'])
-                # 팀 
-                team.append(result['properties']['팀']['select']['name'])
-                # notion_url
-                notion_urls.append("https://notion.so/"+result['id'].replace('-',''))
+            if (result['properties']['block']['select']['name'] != '명예의전당') and (result['properties']['근무일체크']['formula']['boolean'] == True): # 근무일&생일check는 기본 공란이기 때문에 예외처리할 필요가 없음.
+                try:
+                    name_sample = result['properties']['Name']['title'][0]['text']['content']
+                    anniv_sample = result['properties']['입사일']['date']['start']
+                    n_sample = str(int(datetime.now().strftime('%Y')) - int(datetime.strptime(result['properties']['입사일']['date']['start'],'%Y-%m-%d').strftime('%Y')))
+                    grade_sample = result['properties']['직급']['select']['name']
+                    team_sample = result['properties']['팀']['select']['name']
+                    notion_sample = "https://notion.so/"+result['id'].replace('-','')
+
+                    # 이름 
+                    name.append(name_sample)
+                    # 입사일
+                    anniversary.append(anniv_sample)
+                    # N
+                    n.append(n_sample)
+                    # 직급
+                    grade.append(grade_sample)
+                    # 팀 
+                    team.append(team_sample)    
+                    # notion_url
+                    notion_urls.append(notion_sample)
+                except:
+                    pass
             else :
                 pass
 
@@ -171,8 +199,6 @@ class Sentence(get_api):
         for n,u in zip(name,notion_urls):
             sentence2 += f'{n}님의 노션 : <a href = "{u}"> click this! </a> <br>'
             #sentence2 += f'{n}님의 노션 : {u} <br>'
-
-
 
         self.anniversary_sentence = sentence
         self.anniversary_sentence2 = sentence2
@@ -248,9 +274,9 @@ class Sentence(get_api):
     def newbie(self):
         meta_today = self.meta
 
-        with open("./data/team_list_yesterday.p", 'rb') as f:
+        with open("../../data/team_list_yesterday.p", 'rb') as f:
             meta_yesterday = pck.load(f)
-    
+        
         # 어제와의 메타정보 비교
         meta_compare = pd.merge(meta_today, meta_yesterday, on = ['name','grade'], how = 'left', suffixes=['_today','_yesterday'])
         
