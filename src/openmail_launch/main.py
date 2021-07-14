@@ -50,7 +50,6 @@ if __name__ == '__main__':
     SMail = SendEmail(SenderMailServer, SenderEmail, SenderPW) # 수신 메일 설정 
     
     TargetEmail = meta.email.to_list()
-    #TargetEmail = ['niceguy1575@openmate.co.kr', 'planajh@openmate.co.kr', 'suyo1207@openmate.co.kr']
 
     # 메일 내용 설정 
     print("2. make mail message")
